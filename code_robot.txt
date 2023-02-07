@@ -1,0 +1,149 @@
+const int cm=12;
+bool ecm;
+const int ce=2;
+bool ece;
+const int cd =7;
+bool ecd;
+const int cg =8;
+bool ecg;
+const int mdf = 3;
+const int mdr = 5;
+const int mgf= 10;
+const int mgr = 11;
+
+
+void setup() {
+  Serial.begin(9600);
+pinMode(cd, INPUT); 
+pinMode(cg, INPUT); 
+pinMode(cm, INPUT); 
+pinMode(ce, INPUT); 
+
+
+pinMode(mdf, OUTPUT); 
+pinMode(mdr, OUTPUT); 
+pinMode(mgf, OUTPUT); 
+pinMode(mdr, OUTPUT);
+
+
+}  
+
+//FONCTIONS MOTEURS
+void forward()
+{
+ analogWrite(mdf,200);   
+ analogWrite(mdr,0); 
+ analogWrite(mgf,200);
+ analogWrite(mgr,0); 
+ 
+}
+
+
+void gauche()
+{ analogWrite(mdf,200); 
+  analogWrite(mdr,0); 
+  analogWrite(mgf,0);
+  analogWrite(mgr,0); 
+}
+
+void droite()
+{analogWrite(mdf,0); 
+ analogWrite(mdr,0); 
+ analogWrite(mgf,150);
+ analogWrite(mgr,0); 
+ 
+}
+void attente()
+{analogWrite(mdf,0); 
+ analogWrite(mdr,0); 
+ analogWrite(mgf,0);
+  analogWrite(mgr,0); 
+  
+}
+
+void revdroite()
+{ 
+  analogWrite(mdf,0); 
+  analogWrite(mdr,70); 
+  analogWrite(mgf,170);
+  analogWrite(mgr,0); 
+ 
+}
+void revgauche()
+{analogWrite(mdf,170); 
+ analogWrite(mdr,0); 
+ analogWrite(mgf,0);
+ analogWrite(mgr,70); 
+}
+
+void loop() {
+    ecd=digitalRead(cd);
+    ecg=digitalRead(cg);
+    ecm=digitalRead(cm);
+    ece=digitalRead(ce);
+  
+  /* if (ece)
+    {
+      droite ();
+    }
+    */
+while(!ecm&&ece)
+    {
+     ecd=digitalRead(cd);
+    ecg=digitalRead(cg);
+    ecm=digitalRead(cm);
+    ece=digitalRead(ce);
+    
+  analogWrite(mdf,0); 
+  analogWrite(mdr,40); 
+  analogWrite(mgf,120);
+  analogWrite(mgr,0);
+
+      
+
+    }
+/*2*/     if (!ecd&&ecm&&!ecg)//forward
+    {
+      forward();
+     
+    }
+    
+/*3*/    else if (!ecd&&!ecm&&ecg)//tourne gauche
+    {
+      revgauche();
+    } 
+
+    
+/*4*/    else if (ecd&&!ecm&&!ecg)//tourne droite
+    {
+      revdroite();
+    }
+    
+/*5*/    else if (ecd&&ecm&&!ecg)//tourne droite
+    {
+      revdroite();
+    } 
+    
+
+/*6*/    else if (!ecd&&ecm&&ecg)//tourne gauche
+    {
+      revgauche();
+    }
+
+  else if (!ecd&&!ecm&&!ecg)//forward
+    {
+      
+      forward();
+    }
+/*
+ else if (ecd&&!ecm&&ecg)//forward
+    {
+      forward();
+    }*/
+
+   /* else if (ece);
+    {
+      droite();
+    }*/
+
+

@@ -1,0 +1,158 @@
+
+const int cd=7;
+bool ecd;
+const int cg=8;
+bool ecg;
+const int cm=12;
+bool ecm;
+const int ce=2;
+bool ece;
+
+const int mdf = 3;
+const int mdr = 5;
+const int mgf= 10;
+const int mgr = 11;
+
+const int tpm=4;
+const int epm=A1;
+const int tpg=6;
+const int epg=A0;
+const int tpd=13;
+const int epd=A2;
+
+int distanced;
+long durationd;
+int distanceg;
+long durationg;
+int distancem;
+long durationm;
+
+
+void setup() {
+  Serial.begin(9600);
+pinMode(cd, INPUT); 
+pinMode(cg, INPUT); 
+pinMode(cm, INPUT); 
+pinMode(ce, INPUT); 
+
+
+pinMode(tpd, OUTPUT); 
+pinMode(epd, INPUT); 
+pinMode(tpg, OUTPUT); 
+pinMode(epg, INPUT);
+pinMode(tpm, OUTPUT); 
+pinMode(epm, INPUT);
+
+
+pinMode(mdf, OUTPUT); 
+pinMode(mdr, OUTPUT); 
+pinMode(mgf, OUTPUT); 
+pinMode(mdr, OUTPUT);
+}  
+
+//FONCTIONS MOTEURS
+void forward()
+{
+ analogWrite(mdf,100);   
+ analogWrite(mdr,0); 
+ analogWrite(mgf,100);
+ analogWrite(mgr,0); 
+ 
+}
+
+
+void gauche()
+{ analogWrite(mdf,100); 
+  analogWrite(mdr,0); 
+  analogWrite(mgf,0);
+  analogWrite(mgr,0); 
+}
+
+void droite()
+{analogWrite(mdf,0); 
+ analogWrite(mdr,0); 
+ analogWrite(mgf,100);
+ analogWrite(mgr,0); 
+ 
+}
+void attente()
+{analogWrite(mdf,0); 
+ analogWrite(mdr,0); 
+ analogWrite(mgf,0);
+  analogWrite(mgr,0); 
+  
+}
+
+void revdroite()
+{ 
+  analogWrite(mdf,0); 
+  analogWrite(mdr,70); 
+  analogWrite(mgf,100);
+  analogWrite(mgr,0); 
+ 
+}
+void revgauche()
+{analogWrite(mdf,100); 
+ analogWrite(mdr,0); 
+ analogWrite(mgf,0);
+ analogWrite(mgr,70); 
+}
+
+void loop() {
+digitalWrite(tpm,LOW);
+   
+     delayMicroseconds(5);
+     digitalWrite(tpm,HIGH);
+    
+     delayMicroseconds(10);
+     
+     digitalWrite(tpm,LOW);
+  
+
+     durationm=pulseIn( epm ,HIGH);
+    
+     
+     distancem=durationm*0.034/2;
+     digitalWrite(tpd,LOW);
+   
+     delayMicroseconds(5);
+     digitalWrite(tpd,HIGH);
+    
+     delayMicroseconds(10);
+     
+     digitalWrite(tpd,LOW);
+  
+
+     durationd=pulseIn( epd ,HIGH);
+    
+     
+     distanced=durationd*0.034/2;
+     digitalWrite(tpg,LOW);
+   
+     delayMicroseconds(5);
+     digitalWrite(tpg,HIGH);
+    
+     delayMicroseconds(10);
+     
+     digitalWrite(tpg,LOW);
+  
+
+     durationm=pulseIn( epg ,HIGH);
+    
+     
+     distanceg=durationg*0.034/2;
+
+Serial.print("Distancem: ");
+  Serial.print(distancem);
+  Serial.println(" cm");
+
+ Serial.print("Distanced: ");
+  Serial.print(distanced);
+  Serial.println(" cm");
+   
+  Serial.print("Distanceg: ");
+  Serial.print(distanceg);
+  Serial.println(" cm");
+   
+  
+}
